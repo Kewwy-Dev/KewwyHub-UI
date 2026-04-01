@@ -1,1 +1,1 @@
-local KewwyHub = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kewwy-Dev/KewwyHub-UI/refs/heads/main/KewwyUI.lua"))()local KewwyHub = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kewwy-Dev/KewwyHub-UI/refs/heads/main/KewwyUI.lua"))()
+local KewwyHub = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kewwy-Dev/KewwyHub-UI/refs/heads/main/KewwyUI.lua"))()
