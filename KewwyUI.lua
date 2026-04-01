@@ -1,3 +1,6 @@
+-- ==========================================
+-- 4. โหลด UI Library (แบบฝังโค้ด Local)
+-- ==========================================
 local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
@@ -282,13 +285,12 @@ function KewwyHub:CreateWindow()
             return BuildElementsAPI(SubContent)
         end
 
-        -- [แก้ไข] ถมสี Button เป็นสีเขียว 318F7D
         function Elements:CreateButton(text, callback)
             elementCount = elementCount + 1
             local Btn = Instance.new("TextButton", parentFrame)
             Btn.LayoutOrder = elementCount
             Btn.Size = UDim2.new(1, 0, 0, 36)
-            Btn.BackgroundColor3 = Theme.MainGreen -- ถมสี 318F7D ตรงนี้เลย
+            Btn.BackgroundColor3 = Theme.MainGreen 
             Btn.Text = ""
             Btn.AutoButtonColor = false
             Instance.new("UICorner", Btn).CornerRadius = UDim.new(0, 4)
@@ -299,12 +301,11 @@ function KewwyHub:CreateWindow()
             Label.BackgroundTransparency = 1
             Label.Text = text
             Label.TextColor3 = Theme.White
-            Label.Font = Enum.Font.GothamBold -- ปุ่มทึบใช้ตัวหนาจะสวยครับ
+            Label.Font = Enum.Font.GothamBold 
             Label.TextSize = 13
-            Label.TextXAlignment = Enum.TextXAlignment.Center -- ให้อยู่กึ่งกลาง
+            Label.TextXAlignment = Enum.TextXAlignment.Center 
 
             Btn.MouseButton1Click:Connect(function()
-                -- อนิเมชันตอนกด เปลี่ยนเป็นเขียวเข้มขึ้นนิดนึง
                 TweenService:Create(Btn, TweenInfo.new(0.1), {BackgroundColor3 = Color3.fromHex("#246B5D")}):Play()
                 task.wait(0.1)
                 TweenService:Create(Btn, TweenInfo.new(0.1), {BackgroundColor3 = Theme.MainGreen}):Play()
@@ -489,7 +490,6 @@ function KewwyHub:CreateWindow()
             Arrow.Font = Enum.Font.Gotham
             Arrow.TextSize = 10
 
-            -- [แก้ไข] นำ OptionList ไปไว้ที่ ScreenGui ชั้นนอกสุด ป้องกันการโดนตัดขอบจาก UIListLayout
             local OptionList = Instance.new("Frame", ScreenGui)
             OptionList.Name = "OptionList_Floating"
             
@@ -524,15 +524,12 @@ function KewwyHub:CreateWindow()
 
             local dropOpen = false
             
-            -- [แก้ไขสำคัญ] ตรวจจับว่าถ้าเลื่อนจอแล้วปุ่มโดนซ่อน (หรือหลุดกรอบ) ให้พับเก็บ Dropdown ทันที!
             RunService.RenderStepped:Connect(function()
                 if dropOpen then
-                    -- เช็คขอบเขตของหน้าต่าง TabPage
                     local tabY = parentFrame.AbsolutePosition.Y
                     local tabBottom = tabY + parentFrame.AbsoluteSize.Y
                     local btnY = DropBtn.AbsolutePosition.Y
 
-                    -- ถ้าตัวปุ่ม Select หลุดขอบบน หรือหลุดขอบล่างไปแล้ว ให้ปิด Dropdown อัตโนมัติ
                     if btnY < tabY - 10 or btnY > tabBottom or not DropBtn.Visible or not DropFrame.Visible then
                         OptionList.Visible = false
                         dropOpen = false
@@ -540,7 +537,6 @@ function KewwyHub:CreateWindow()
                         return
                     end
 
-                    -- ให้ Dropdown วิ่งตามปุ่มเป๊ะๆ
                     OptionList.Position = UDim2.new(0, DropBtn.AbsolutePosition.X, 0, DropBtn.AbsolutePosition.Y + DropBtn.AbsoluteSize.Y + 2)
                     
                     if DropBtn.AbsoluteSize.X > maxWidth then
@@ -740,3 +736,4 @@ function KewwyHub:CreateWindow()
 
     return WindowInfo
 end
+return KewwyHub
