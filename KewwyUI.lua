@@ -313,7 +313,7 @@ function KewwyHub:CreateWindow()
             end)
         end
 
-        function Elements:CreateToggle(text, callback)
+        function Elements:CreateToggle(text, default, callback)
             elementCount = elementCount + 1
             local TogFrame = Instance.new("TextButton", parentFrame)
             TogFrame.LayoutOrder = elementCount
@@ -349,7 +349,14 @@ function KewwyHub:CreateWindow()
             Circle.BackgroundColor3 = Theme.White
             Instance.new("UICorner", Circle).CornerRadius = UDim.new(1, 0)
 
-            local state = false
+            -- [ระบบเซ็ตค่าเริ่มต้นของ Toggle]
+            local state = default or false
+            if state then
+                Circle.Position = UDim2.new(1, -15, 0.5, -6)
+                SwitchBG.BackgroundColor3 = Theme.MainGreen
+                SwitchStroke.Color = Theme.MainGreen
+            end
+
             TogFrame.MouseButton1Click:Connect(function()
                 state = not state
                 if state then
@@ -365,7 +372,7 @@ function KewwyHub:CreateWindow()
             end)
         end
 
-        function Elements:CreateSlider(text, min, max, callback)
+        function Elements:CreateSlider(text, min, max, default, callback)
             elementCount = elementCount + 1
             local SliderFrame = Instance.new("Frame", parentFrame)
             SliderFrame.LayoutOrder = elementCount
@@ -383,11 +390,15 @@ function KewwyHub:CreateWindow()
             Label.TextSize = 13
             Label.TextXAlignment = Enum.TextXAlignment.Left
 
+            -- [ระบบเซ็ตค่าเริ่มต้นของ Slider]
+            local startValue = default or min
+            startValue = math.clamp(startValue, min, max)
+
             local ValueLabel = Instance.new("TextLabel", SliderFrame)
             ValueLabel.Size = UDim2.new(0, 40, 0, 20)
             ValueLabel.Position = UDim2.new(1, -55, 0, 8)
             ValueLabel.BackgroundTransparency = 1
-            ValueLabel.Text = tostring(min)
+            ValueLabel.Text = tostring(startValue)
             ValueLabel.TextColor3 = Theme.White
             ValueLabel.Font = Enum.Font.GothamMedium
             ValueLabel.TextSize = 12
@@ -404,7 +415,8 @@ function KewwyHub:CreateWindow()
             BarStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 
             local BarFill = Instance.new("Frame", BarBG)
-            BarFill.Size = UDim2.new(0, 0, 1, 0)
+            local startPercent = (startValue - min) / (max - min)
+            BarFill.Size = UDim2.new(startPercent, 0, 1, 0)
             BarFill.BackgroundColor3 = Theme.MainGreen
             Instance.new("UICorner", BarFill).CornerRadius = UDim.new(1, 0)
 
